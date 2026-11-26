@@ -1,0 +1,14 @@
+.env
+.env.*
+*.bak
+*.backup*
+*.pyc
+__pycache__/
+whatsapp_lookup_data/
+*.csv
+
+call_log_reports/
+url_reports/
+url_analysis_history.json
+*.before_*
+whatsapp_lookup_data/
