@@ -23,7 +23,7 @@ A Python-based public information lookup and personal digital safety toolkit.
 
 ## INSTALLATION
 
-Update packages:
+Update Termux:
 
     pkg update && pkg upgrade -y
 
@@ -31,13 +31,21 @@ Install Git and Python:
 
     pkg install git python -y
 
-Clone repository:
+Clone the project:
 
     git clone https://github.com/somrat3376-sys/SCL.git
 
-Open project:
+View downloaded projects:
+
+    ls
+
+Open SCL project:
 
     cd SCL
+
+View project files:
+
+    ls
 
 Install dependencies:
 
@@ -45,24 +53,15 @@ Install dependencies:
 
 ## RUN TOOL
 
+Start SOMRAT CYBER LOOKUP:
+
     python main.py
 
 ## UPDATE TOOL
 
-Open project directory:
-
     cd SCL
-
-Download latest updates:
-
     git pull
-
-Install updated dependencies:
-
     python -m pip install -r requirements.txt
-
-Start tool:
-
     python main.py
 
 ## API CONFIGURATION
