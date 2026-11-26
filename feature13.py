@@ -8,6 +8,7 @@ import urllib.error
 from datetime import datetime
 
 import phonenumbers
+from voice_assistant import speak_result
 from phonenumbers import geocoder, carrier
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -371,6 +372,16 @@ def whatsapp_lookup():
         if choice in actions:
             loading("LOADING PAGE", PAGES[choice][1])
             actions[choice]()
+
+            summaries = {
+                "1": "নম্বর তথ্য পরীক্ষা সম্পন্ন। সাধারণ তথ্য স্ক্রিনে দেখুন।",
+                "2": "পাবলিক প্রোফাইল পর্যালোচনা সম্পন্ন। তথ্য স্বাধীনভাবে যাচাই করা হয়নি।",
+                "3": "পাবলিক স্ক্যাম সার্চ সম্পন্ন। সার্চ ফলাফল অভিযোগের প্রমাণ নয়।",
+                "4": "ইভিডেন্স সেন্টারের কাজ সম্পন্ন। ব্যক্তিগত তথ্য স্ক্রিনে দেখুন।",
+                "5": "বিজনেস এপিআই পর্যালোচনা সম্পন্ন। গোপন তথ্য পড়ে শোনানো হবে না।"
+            }
+
+            speak_result(summaries[choice])
             ask("Enter to return")
         else:
             print(RED + "INVALID OPTION" + R)

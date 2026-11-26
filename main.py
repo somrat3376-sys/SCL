@@ -1,3 +1,4 @@
+from voice_assistant import welcome, speak_result
 from feature07 import impersonation_safety_check
 from feature06 import fake_profile_safety_check
 from feature08 import post_evidence_collector
@@ -107,6 +108,29 @@ def device_information():
           "Battery information requires separate Android access." +
           RESET)
     print("-" * 45)
+
+    ram_summary = (
+        f"মোট র‍্যাম {total:.0f} মেগাবাইট এবং "
+        f"ব্যবহারযোগ্য র‍্যাম {available:.0f} মেগাবাইট।"
+        if "total" in locals() and "available" in locals()
+        else "র‍্যামের তথ্য পাওয়া যায়নি।"
+    )
+
+    storage_summary = (
+        f"মোট স্টোরেজ {usage.total / (1024**3):.2f} জিবি এবং "
+        f"ফাঁকা স্টোরেজ {usage.free / (1024**3):.2f} জিবি।"
+        if "usage" in locals()
+        else "স্টোরেজের তথ্য পাওয়া যায়নি।"
+    )
+
+    speak_result(
+        f"আপনার ডিভাইসের তথ্য পাওয়া গেছে। "
+        f"নির্মাতা {manufacturer}, মডেল {model}, "
+        f"অ্যান্ড্রয়েড সংস্করণ {android}, "
+        f"পাইথন সংস্করণ {platform.python_version()}, "
+        f"প্রসেসর কোর {os.cpu_count()}। "
+        f"{ram_summary} {storage_summary}"
+    )
 
 
 
@@ -394,6 +418,23 @@ def menu():
                 loading("API CONFIGURATION", CYAN)
                 feature_status()
 
+            voice_summaries = {
+                "01": "নাম্বার তথ্য পরীক্ষা সম্পন্ন হয়েছে। সাধারণ নম্বরের তথ্য স্ক্রিনে দেখানো হয়েছে।",
+                "02": "পাবলিক নম্বর সার্চ সম্পন্ন হয়েছে। প্রতিষ্ঠানের প্রকাশ্য যোগাযোগের সার্চ লিংক দেখানো হয়েছে।",
+                "03": "স্প্যাম চেক সম্পন্ন হয়েছে। পাবলিক সার্চের ফলাফল দেখানো হয়েছে। এগুলো নিশ্চিত প্রমাণ নয়।",
+                "04": "পাবলিক পোস্ট সার্চ সম্পন্ন হয়েছে। সার্চ লিংক স্ক্রিনে দেখানো হয়েছে।",
+                "05": "প্রোফাইল লিংক সার্চ সম্পন্ন হয়েছে। প্রকাশ্য প্রোফাইলের সার্চ লিংক দেখানো হয়েছে।",
+                "06": "প্রোফাইল নিরাপত্তা পরীক্ষা সম্পন্ন হয়েছে। সতর্কতার লক্ষণগুলো স্ক্রিনে দেখুন।",
+                "07": "ডোমেইন তথ্য সংগ্রহ সম্পন্ন হয়েছে। সংগৃহীত তথ্য স্ক্রিনে দেখানো হয়েছে।",
+                "08": "ইভিডেন্স ব্যবস্থাপনা সম্পন্ন হয়েছে। আপনার নির্বাচিত কাজের ফলাফল স্ক্রিনে দেখানো হয়েছে।",
+                "09": "লিংক নিরাপত্তা পরীক্ষা সম্পন্ন হয়েছে। ফলাফল ও সতর্কতা স্ক্রিনে দেখুন।",
+                "10": "কল লগ বিশ্লেষণ সম্পন্ন হয়েছে। ব্যক্তিগত তথ্য গোপন রেখে ফলাফল স্ক্রিনে দেখুন।",
+                            "14": "এপিআই কনফিগারেশন পরীক্ষা সম্পন্ন হয়েছে। কনফিগারেশনের অবস্থা স্ক্রিনে দেখানো হয়েছে। গোপন তথ্য পড়ে শোনানো হবে না।"
+            }
+
+            if choice in voice_summaries:
+                speak_result(voice_summaries[choice])
+
             input(CYAN + "\n╰─ Press Enter to return to Main Menu..." + RESET)
 
         else:
@@ -430,4 +471,5 @@ def profile_link_finder():
     print("-" * 45)
 
 if __name__ == "__main__":
+    welcome()
     menu()
